@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommerceController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [CommerceController::class, 'index'])->name('Commerce.index');
-Route::get('/commerce.ajout', [CommerceController::class, 'ajout'])->name('Commerce.ajout');
+Route::get('/', [CommerceController::class, 'create'])->name('Commerce.form');
+Route::post('/', [CommerceController::class, 'store'])->name('Commerce.store');
+Route::get('/Première_pages', [CommerceController::class, 'ajout'])->name('Commerce.ajout');
+Route::get('/commerce.update/{id}', [CommerceController::class, 'update'])->name('Commerce.update');
+Route::post('/update', [CommerceController::class, 'traitement'])->name('Commerce.traitement');
+Route::get('/commerce.delete/{id}', [CommerceController::class, 'delete'])->name('Commerce.delete');
+Route::get('/commerce.actualise', [CommerceController::class, 'actualise'])->name('Commerce.actualise');
+Route::get('/commerce.image', [CommerceController::class, 'image'])->name('Commerce.image');
 
 /*Route::get('/', function () {
     return view('welcome');
@@ -32,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/Projet', [CommerceController::class, 'projet'])->name('projet');
+Route::post('/panier/ajouter', [CartController::class, 'store'])->name('Cart.store');
 
+Route::get('/panier/ajouter', 'CartContreoller@store')->name('cart.store');
 require __DIR__.'/auth.php';
